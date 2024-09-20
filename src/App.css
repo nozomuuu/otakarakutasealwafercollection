@@ -105,3 +105,70 @@ button.back-button {
   left: 50%;
   transform: translateX(-50%);
 }
+/* 画像やボタンなど、通常のスタイル */
+img {
+  width: 200px;
+  height: 200px;
+}
+
+p {
+  font-size: 1rem;
+}
+
+button {
+  width: 100px;
+  height: 50px;
+  font-size: 1rem;
+}
+
+/* レスポンシブデザインのためのメディアクエリ */
+@media only screen and (max-width: 600px) {
+  /* 画像サイズを小さくする */
+  img {
+    width: 100px;
+    height: 100px;
+  }
+
+  /* テキストサイズを小さくする */
+  p {
+    font-size: 0.6rem;
+  }
+
+  /* ボタンのサイズを調整する */
+  button {
+    width: 80%;
+    font-size: 0.8rem;
+  }
+
+  /* ステッカーのコンテナのレイアウトを調整する */
+  .sticker-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+  }
+  
+  /* 全体の余白やパディングを調整 */
+  body {
+    padding: 10px;
+  }
+
+  /* その他のレイアウト調整 */
+  .header, .footer {
+    font-size: 0.8rem;
+    padding: 10px;
+  }
+}
+/* スマホ向けの画像やボタンのスタイルをクラスで適用 */
+img.responsive-img {
+  width: 200px;
+  height: 200px;
+}
+
+@media only screen and (max-width: 600px) {
+  img.responsive-img {
+    width: 100px;
+    height: 100px;
+  }
+}
