@@ -42,6 +42,8 @@
   position: absolute !important;
   left: 50% !important;
   transform: translateX(-50%) !important;
+  top: 50%; /* シールがy軸中央に来るように修正 */
+  transform: translate(-50%, -50%); /* x軸とy軸両方を中央に設定 */
 }
 
 /* シールがフェードインして表示される */
@@ -147,6 +149,13 @@ button {
   /* ヘッダーのテキストサイズを小さくする */
   h1 {
     font-size: 1.5rem; /* ヘッダーの文字サイズを調整 */
+  }
+
+  /* 残りパック数のテキストを「今日のウエハースを開けよう！」の下に移動 */
+  .remaining-packs {
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 5px;
   }
 
   /* ステッカーのサイズを小さくする */
