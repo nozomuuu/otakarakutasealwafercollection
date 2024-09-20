@@ -16,7 +16,7 @@
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0); /* シールが中央に収まる */
   }
 }
 
@@ -41,9 +41,8 @@
   transition: opacity 0.5s ease-in-out;
   position: absolute !important;
   left: 50% !important;
-  transform: translateX(-50%) !important;
-  top: 50%; /* シールがy軸中央に来るように修正 */
-  transform: translate(-50%, -50%); /* x軸とy軸両方を中央に設定 */
+  top: 50% !important; /* 縦中央に配置 */
+  transform: translate(-50%, -50%) !important; /* X軸・Y軸ともに中央揃え */
 }
 
 /* シールがフェードインして表示される */
@@ -126,98 +125,10 @@ button {
   margin-top: 10px; /* ボタン間に余白を追加 */
 }
 
-/* レスポンシブデザインのためのメディアクエリ */
-@media only screen and (max-width: 600px) {
-  /* 画像サイズを小さくする */
-  img {
-    width: 100px;
-    height: 100px;
-  }
-
-  /* テキストサイズを小さくする */
-  p {
-    font-size: 0.8rem;
-  }
-
-  /* ボタンのサイズを調整する */
-  button {
-    width: 90%;
-    font-size: 0.8rem;
-    margin-top: 10px; /* ボタン間の余白を調整 */
-  }
-
-  /* ヘッダーのテキストサイズを小さくする */
-  h1 {
-    font-size: 1.5rem; /* ヘッダーの文字サイズを調整 */
-  }
-
-  /* 残りパック数のテキストを「今日のウエハースを開けよう！」の下に移動 */
-  .remaining-packs {
-    font-size: 1rem;
-    text-align: center;
-    margin-top: 5px;
-  }
-
-  /* ステッカーのサイズを小さくする */
-  .sticker-item img {
-    width: 80px;
-    height: 80px;
-  }
-
-  /* 全体の余白やパディングを調整 */
-  body {
-    padding: 10px;
-  }
-
-  /* ボタン間に余白を追加 */
-  .wafer + button, .wafer + .back-button {
-    margin-top: 20px;
-  }
-
-  /* ウエハースの画像とボタンの間隔を調整 */
-  .wafer {
-    margin-bottom: 30px;
-  }
-
-  /* ヘッダーやフッターのサイズ調整 */
-  .header, .footer {
-    font-size: 0.8rem;
-    padding: 10px;
-  }
-}
-/* シールが下からフェードインしながら表示されるアニメーション */
-@keyframes stickerFadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(200px); /* シールが下から登場 */
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0); /* シールが中央に収まる */
-  }
-}
-
-/* シールのスタイル */
-.sticker {
-  width: 300px !important;
-  height: auto !important;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-  position: absolute !important;
-  left: 50% !important;
-  top: 50% !important; /* 縦中央に配置 */
-  transform: translate(-50%, -50%) !important; /* X軸・Y軸ともに中央揃え */
-}
-
-/* シールがフェードインして表示される */
-.sticker.show {
-  animation: stickerFadeIn 1s ease-in-out forwards;
-}
-
 /* 今日のウエハースを開けよう！と残りパック数のレイアウト調整 */
 .header {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 2rem; /* ヘッダーの文字サイズを調整 */
   margin-bottom: 10px;
 }
 
@@ -227,16 +138,7 @@ button {
   margin-top: 5px; /* 今日のウエハースを開けよう！ の次の行に表示されるように調整 */
 }
 
-/* その他の要素のスタイル調整 */
-button {
-  margin-top: 20px;
-}
-
-.wafer {
-  margin-bottom: 20px; /* ウエハース画像とボタンの距離を調整 */
-}
-
-/* スマホ用の調整 */
+/* レスポンシブデザインのためのメディアクエリ */
 @media only screen and (max-width: 600px) {
   /* 画像サイズを小さくする */
   img {
@@ -255,17 +157,20 @@ button {
     font-size: 0.8rem;
   }
 
-  /* ステッカーのレイアウトを調整 */
-  .sticker {
-    width: 80% !important; /* スマホ用にサイズを縮小 */
-    height: auto !important;
-  }
-
+  /* ヘッダーのテキストサイズを小さくする */
   .header {
     font-size: 1.2rem;
   }
 
+  /* 残りパック数のテキスト */
   .remaining-packs {
     font-size: 0.8rem;
+    margin-top: 5px; /* 今日のウエハースを開けよう！の下に余白を追加 */
+  }
+
+  /* シールの画像を中央に配置 */
+  .sticker {
+    width: 80% !important;
+    height: auto !important;
   }
 }
