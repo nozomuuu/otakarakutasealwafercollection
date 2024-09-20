@@ -185,3 +185,87 @@ button {
     padding: 10px;
   }
 }
+/* シールが下からフェードインしながら表示されるアニメーション */
+@keyframes stickerFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(200px); /* シールが下から登場 */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* シールが中央に収まる */
+  }
+}
+
+/* シールのスタイル */
+.sticker {
+  width: 300px !important;
+  height: auto !important;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important; /* 縦中央に配置 */
+  transform: translate(-50%, -50%) !important; /* X軸・Y軸ともに中央揃え */
+}
+
+/* シールがフェードインして表示される */
+.sticker.show {
+  animation: stickerFadeIn 1s ease-in-out forwards;
+}
+
+/* 今日のウエハースを開けよう！と残りパック数のレイアウト調整 */
+.header {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.remaining-packs {
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 5px; /* 今日のウエハースを開けよう！ の次の行に表示されるように調整 */
+}
+
+/* その他の要素のスタイル調整 */
+button {
+  margin-top: 20px;
+}
+
+.wafer {
+  margin-bottom: 20px; /* ウエハース画像とボタンの距離を調整 */
+}
+
+/* スマホ用の調整 */
+@media only screen and (max-width: 600px) {
+  /* 画像サイズを小さくする */
+  img {
+    width: 100px;
+    height: 100px;
+  }
+
+  /* テキストサイズを小さくする */
+  p {
+    font-size: 0.6rem;
+  }
+
+  /* ボタンのサイズを調整する */
+  button {
+    width: 80%;
+    font-size: 0.8rem;
+  }
+
+  /* ステッカーのレイアウトを調整 */
+  .sticker {
+    width: 80% !important; /* スマホ用にサイズを縮小 */
+    height: auto !important;
+  }
+
+  .header {
+    font-size: 1.2rem;
+  }
+
+  .remaining-packs {
+    font-size: 0.8rem;
+  }
+}
