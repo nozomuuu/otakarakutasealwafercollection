@@ -1,3 +1,4 @@
+ HEAD
 import React from 'react';
 
 function StickersPage() {
@@ -10,3 +11,6 @@ function StickersPage() {
 }
 
 export default StickersPage;
+
+.DS_Store
+ 5607d1c7 (Ignore .DS_Store files)
