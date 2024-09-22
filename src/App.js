@@ -24,9 +24,16 @@ function App() {
       updateRemainingPacks();
       setSticker(pickRandomSticker());
       setStickerVisible(true);
-      // SEの再生
-      const audio = new Audio('/sounds/wafer-open.mp3');
-      audio.play();
+
+      // ウエハースを開けるSE
+      const audioWafer = new Audio('/sounds/wafer-open.mp3');
+      audioWafer.play();
+
+      // シール登場SEを遅らせて再生
+      setTimeout(() => {
+        const audioSticker = new Audio('/sounds/sticker-reveal.mp3');
+        audioSticker.play();
+      }, 1000); // 1秒遅らせてシール登場SEを再生
     } else {
       alert('今日はもうパックを開けられません！');
     }
@@ -34,27 +41,21 @@ function App() {
 
   // シール一覧を開く
   const viewStickers = useCallback(() => {
-    // シール一覧ページへの遷移などの処理を記述
-    const audio = new Audio('/sounds/view-stickers.mp3');
-    audio.play();
-    window.location.href = '/stickers'; // シール一覧ページに移動
+    window.location.href = '/stickers'; // シール一覧ページに遷移
   }, []);
 
   return (
     <div className="App">
-      <h1 style={{ textAlign: 'center', fontSize: '2rem', whiteSpace: 'nowrap', padding: '10px' }}>
-        今日のウエハースを開けよう！
-      </h1>
-      <p style={{ textAlign: 'center', padding: '5px' }}>（残りパック数: {remainingPacks}）</p>
+      <h1 className="header">今日のウエハースを開けよう！</h1>
+      <p className="remaining-packs">（残りパック数: {remainingPacks}）</p>
 
       <img 
         src="/images/wafer.png" 
         alt="ウエハース" 
         className="wafer" 
-        style={{ display: 'block', margin: '20px auto', maxWidth: '300px' }} 
       />
 
-      <button onClick={openWafer} style={{ display: 'block', margin: '20px auto' }}>
+      <button onClick={openWafer} className="open-wafer-button">
         ウエハースを開ける
       </button>
 
@@ -64,13 +65,11 @@ function App() {
             src={sticker} 
             alt="Sticker" 
             className="sticker" 
-            style={{ display: 'block', margin: '0 auto', maxWidth: '300px' }} 
           />
-          <audio src="/sounds/sticker-reveal.mp3" autoPlay />
         </div>
       )}
 
-      <button onClick={viewStickers} style={{ display: 'block', margin: '20px auto' }}>
+      <button onClick={viewStickers} className="back-button">
         手に入れたシール一覧を見る
       </button>
     </div>

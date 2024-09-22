@@ -1,29 +1,36 @@
 /* ウエハースのスタイル */
 .wafer {
-  max-width: 400px; /* ウエハース画像のサイズ調整 */
+  max-width: 400px;
   max-height: 400px;
-  margin: 0 auto 20px auto; /* 中央揃え */
+  margin: 20px auto;
   display: block;
   transition: transform 1s ease-out;
 }
 
-/* ウエハースが開かれたときのアニメーション */
+/* ウエハースが画面外に移動するアニメーション */
 .wafer.open {
-  transform: translateY(-800px); /* ウエハースが上に移動して消える */
-  transition: transform 1s ease-out;
+  animation: moveUp 1s ease-out forwards;
+}
+
+@keyframes moveUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-800px);
+  }
 }
 
 /* シールのスタイル */
 .sticker {
-  width: 400px !important; /* シール画像のサイズをもう二回り大きく調整 */
-  height: auto !important;
+  width: 400px;
+  height: auto;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
-  position: absolute !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
   top: 50%;
-  transform: translate(-50%, -50%); /* x軸とy軸両方を中央に設定 */
 }
 
 /* シールがフェードインして表示される */
@@ -31,33 +38,38 @@
   animation: stickerFadeIn 1s ease-in-out forwards;
 }
 
-/* シール拡大時のスタイル */
-.sticker-expanded {
-  transform: translate(-50%, -50%) scale(1.7); /* 拡大率をさらに調整 */
-  transition: transform 0.3s ease-in-out;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 10;
-  padding: 20px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
+@keyframes stickerFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(200px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* 手に入れたシール一覧ボタンのスタイル */
-button.back-button {
+/* 手に入れたシール一覧ボタン */
+.back-button {
   margin-top: 20px;
   display: block;
   margin-left: auto;
-  margin-right: auto; /* ボタンを中央揃えにする */
+  margin-right: auto;
   bottom: 50px;
   transform: translateX(0%);
+}
+
+/* ウエハースを開けるボタン */
+.open-wafer-button {
+  display: block;
+  margin: 20px auto;
 }
 
 /* 今日のウエハースを開けよう！と残りパック数を中央揃え */
 .header {
   text-align: center;
-  font-size: 1.5rem;
-  margin-bottom: 10px;
+  font-size: 1.8rem;
+  padding: 10px;
 }
 
 .remaining-packs {
@@ -68,17 +80,25 @@ button.back-button {
 
 /* SEの修正 */
 audio {
-  display: none; /* 表示しないが機能させる */
+  display: none;
 }
 
 /* レスポンシブ調整 */
 @media only screen and (max-width: 600px) {
   .wafer {
-    max-width: 250px; /* スマホ用にウエハースのサイズを小さくする */
+    max-width: 250px;
     max-height: 250px;
   }
 
   .sticker {
-    width: 300px !important; /* スマホでもシールが大きく見えるように */
+    width: 300px;
+  }
+
+  .header {
+    font-size: 1.5rem;
+  }
+
+  .remaining-packs {
+    font-size: 0.8rem;
   }
 }
