@@ -1,38 +1,80 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
-// 画像を一括インポートする関数
-const importAll = (requireContext) => {
-  return requireContext.keys().map(requireContext);
-};
-
-// src/images フォルダから .jpg ファイルをすべて読み込む
-const stickerImages = importAll(require.context('./images', false, /\.(png|jpe?g)$/));
-
 function App() {
-  const [sticker, setSticker] = useState(null);
+  // 初期パック数を2に設定
+  const [packCount, setPackCount] = useState(2);
+  const [stickerVisible, setStickerVisible] = useState(false);
+  
+  // パック数を更新する関数
+  function updateRemainingPacks() {
+    const packElement = document.getElementById('pack-count');
+    if (packElement) {
+      packElement.innerText = `${packCount}`;
+    }
+  }
 
-  // ランダムにステッカーの画像を選択する関数
-  const getRandomSticker = () => {
-    const randomIndex = Math.floor(Math.random() * stickerImages.length);
-    return stickerImages[randomIndex];
-  };
+  useEffect(() => {
+    // ウエハースを開けるボタン
+    const waferButton = document.getElementById('open-wafer');
+    
+    if (waferButton) {
+      waferButton.addEventListener('click', () => {
+        if (packCount > 0) {
+          // パック数を1つ減らす
+          setPackCount(packCount - 1);
+          updateRemainingPacks();
 
-  // ウエハースを開けるボタンが押されたときにシールを表示
-  const handleOpenWafer = () => {
-    setSticker(getRandomSticker());
-  };
+          // ウエハースを開ける音を再生
+          const waferSound = new Audio('/sounds/wafer-open.mp3');
+          waferSound.play();
+
+          // シールが登場するまでの遅延をシミュレート
+          setTimeout(() => {
+            // シールが出てくる際の音
+            const stickerSound = new Audio('/sounds/sticker-reveal.mp3');
+            stickerSound.play();
+
+            // シールを表示
+            setStickerVisible(true);
+          }, 1000);
+        } else {
+          alert('今日はもうパックを開けられません！');
+        }
+      });
+    }
+
+    // 手に入れたシール一覧を見るボタンのリンク修正
+    const backButton = document.querySelector('.back-button');
+    
+    if (backButton) {
+      backButton.addEventListener('click', () => {
+        // シール一覧を見る音を再生
+        const viewStickersSound = new Audio('/sounds/view-stickers.mp3');
+        viewStickersSound.play();
+
+        window.location.href = '/stickers';
+      });
+    }
+  }, [packCount]);
 
   return (
     <div className="App">
-      <h1>今日のウエハースを開けよう！</h1>
-      <p className="remaining-packs">（残りパック数: 5）</p>
-      <div className="wafer-container">
-        <img src="./images/wafer.png" alt="wafer" className="wafer" />
-        <button onClick={handleOpenWafer} className="open-wafer-button">ウエハースを開ける</button>
+      <div className="header">
+        今日のウエハースを開けよう！
       </div>
-      {sticker && <img src={sticker} alt="Sticker" className="sticker" />}
+      <div className="remaining-packs" style={{ textAlign: 'center' }}>
+        残りパック数: <span id="pack-count">{packCount}</span>
+      </div>
+      <button id="open-wafer">ウエハースを開ける</button>
       <button className="back-button">手に入れたシール一覧を見る</button>
+      
+      {/* シール表示部分 */}
+      {stickerVisible && (
+        <div className="sticker">
+          <img src="/images/sticker1.jpg" alt="Sticker" style={{ width: '200px', height: 'auto' }} />
+        </div>
+      )}
     </div>
   );
 }
