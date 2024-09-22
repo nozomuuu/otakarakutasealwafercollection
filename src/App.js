@@ -5,35 +5,33 @@ function App() {
   const [remainingPacks, setRemainingPacks] = useState(2);
   const [isStickerVisible, setStickerVisible] = useState(false);
   const [sticker, setSticker] = useState(null);
-  const [waferOpen, setWaferOpen] = useState(false);
+  const [rarity, setRarity] = useState(''); // レアリティを管理
 
-  // シールをランダムに選択
   const pickRandomSticker = useCallback(() => {
     const totalStickers = 50;
     const randomNumber = Math.floor(Math.random() * totalStickers) + 1;
+    const rarityStars = randomNumber <= 10 ? '★★★' : randomNumber <= 30 ? '★★' : '★';
+    setRarity(rarityStars); // レアリティを設定
     return `/images/${randomNumber}.jpg`;
   }, []);
 
-  // 残りパック数を更新
   const updateRemainingPacks = useCallback(() => {
     setRemainingPacks((prevPacks) => prevPacks - 1);
   }, []);
 
-  // ウエハースを開ける
   const openWafer = useCallback(() => {
     if (remainingPacks > 0) {
       updateRemainingPacks();
       setSticker(pickRandomSticker());
       setStickerVisible(false); // シールを一旦非表示
-      setWaferOpen(true); // ウエハースが開いた状態
       const audio = new Audio('/sounds/wafer-open.mp3');
       audio.play();
 
       setTimeout(() => {
-        setStickerVisible(true); // シールを1秒後に表示
+        setStickerVisible(true); // シールを表示
         const stickerAudio = new Audio('/sounds/sticker-reveal.mp3');
-        stickerAudio.play(); // シール登場後にSEを再生
-      }, 2000); // 2秒後にシールが表示され、SEが再生される
+        stickerAudio.play(); // シールが表示されたタイミングでSEを再生
+      }, 2000); // 2秒後にシールを表示
     } else {
       alert('今日はもうパックを開けられません！');
     }
@@ -41,21 +39,21 @@ function App() {
 
   // シール一覧ページに遷移
   const viewStickers = useCallback(() => {
-    window.location.href = '/stickers'; // シール一覧ページへ遷移
+    window.location.href = '/stickers';
   }, []);
 
   return (
     <div className="App">
-      <h1 style={{ textAlign: 'center', fontSize: '1.5rem', whiteSpace: 'nowrap', padding: '10px' }}>
+      <h1 style={{ textAlign: 'center', fontSize: '1.5rem', whiteSpace: 'nowrap', padding: '5px' }}>
         今日のウエハースを開けよう！
       </h1>
-      <p style={{ textAlign: 'center' }}>（残りパック数: {remainingPacks}）</p>
+      <p style={{ textAlign: 'center', fontSize: '1rem' }}>（残りパック数: {remainingPacks}）</p>
 
       <img 
         src="/images/wafer.png" 
         alt="ウエハース" 
-        className={`wafer ${waferOpen ? 'open' : ''}`} // ウエハースが開いた状態を反映
-        style={{ display: 'block', margin: '20px auto', maxWidth: '200px', cursor: 'pointer' }}
+        className={`wafer ${isStickerVisible ? 'open' : ''}`}
+        style={{ display: 'block', margin: '20px auto', maxWidth: '200px', cursor: 'pointer' }} 
         onClick={openWafer}
       />
 
@@ -64,13 +62,14 @@ function App() {
       </button>
 
       {isStickerVisible && sticker && (
-        <div className="sticker-container">
+        <div className="sticker-container" style={{ textAlign: 'center', marginTop: '20px' }}>
           <img 
             src={sticker} 
             alt="Sticker" 
-            className="sticker"
+            className="sticker" 
             style={{ display: 'block', margin: '0 auto', maxWidth: '300px' }} 
           />
+          <p style={{ fontSize: '1.2rem', color: 'gold' }}>{rarity}</p> {/* レアリティ★を表示 */}
         </div>
       )}
 
