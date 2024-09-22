@@ -1,11 +1,13 @@
 import { useState, useCallback } from 'react';
 import './App.css';
+import { useNavigate } from 'react-router-dom'; // React Routerを使った遷移
 
 function App() {
   const [remainingPacks, setRemainingPacks] = useState(2); // 1日に引けるパック数を2に設定
   const [isStickerVisible, setStickerVisible] = useState(false);
   const [sticker, setSticker] = useState(null);
   const [isWaferOpen, setWaferOpen] = useState(false); // ウエハースが開かれたかどうかの状態
+  const navigate = useNavigate(); // React Routerでの遷移に使用
 
   // シールのランダム選択
   const pickRandomSticker = useCallback(() => {
@@ -44,9 +46,8 @@ function App() {
 
   // シール一覧を開く
   const viewStickers = useCallback(() => {
-    // シール一覧ページへの遷移（React Router の Link などに置き換える）
-    window.location.href = '/stickers'; // 実際のURLに変更してください
-  }, []);
+    navigate('/stickers'); // React Routerを使って遷移
+  }, [navigate]);
 
   return (
     <div className="App">

@@ -4,12 +4,12 @@
   max-height: 350px;
   margin: 20px auto;
   display: block;
-  transition: transform 1s ease-out;
+  transition: transform 2s ease-out; /* ウエハースの移動速度をゆっくりに */
 }
 
 /* ウエハースが画面外に移動するアニメーション */
 .wafer.open {
-  animation: moveUp 1s ease-out forwards;
+  animation: moveUp 2s ease-out forwards; /* アニメーション速度をゆっくりに */
 }
 
 @keyframes moveUp {
@@ -29,8 +29,8 @@
   transition: opacity 0.5s ease-in-out;
   position: absolute;
   left: 50%;
-  transform: translate(-50%, -50%);
-  top: 50%;
+  top: 50%; /* 中央に表示 */
+  transform: translate(-50%, -50%); /* 完全に中央に配置 */
 }
 
 /* シールがフェードインして表示される */
