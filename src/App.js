@@ -1,27 +1,31 @@
 import React, { useState, useCallback } from 'react';
 import './App.css';
-// import { Link } from 'react-router-dom'; // 未使用のインポートを削除
 
 function App() {
   const [remainingPacks, setRemainingPacks] = useState(2);
   const [isStickerVisible, setStickerVisible] = useState(false);
   const [sticker, setSticker] = useState(null);
+  const [waferOpen, setWaferOpen] = useState(false);
 
+  // シールをランダムに選択
   const pickRandomSticker = useCallback(() => {
     const totalStickers = 50;
     const randomNumber = Math.floor(Math.random() * totalStickers) + 1;
     return `/images/${randomNumber}.jpg`;
   }, []);
 
+  // 残りパック数を更新
   const updateRemainingPacks = useCallback(() => {
     setRemainingPacks((prevPacks) => prevPacks - 1);
   }, []);
 
+  // ウエハースを開ける
   const openWafer = useCallback(() => {
     if (remainingPacks > 0) {
       updateRemainingPacks();
       setSticker(pickRandomSticker());
       setStickerVisible(true);
+      setWaferOpen(true); // ウエハースが開いた状態にする
       const audio = new Audio('/sounds/wafer-open.mp3');
       audio.play();
     } else {
@@ -29,24 +33,30 @@ function App() {
     }
   }, [remainingPacks, updateRemainingPacks, pickRandomSticker]);
 
+  // シール登場時のSE
   const playStickerRevealSE = useCallback(() => {
-    const stickerAudio = new Audio('/sounds/sticker-reveal.mp3');
-    stickerAudio.play();
+    setTimeout(() => {
+      const stickerAudio = new Audio('/sounds/sticker-reveal.mp3');
+      stickerAudio.play();
+    }, 1000); // シールが表示されてから1秒後にSEを再生
   }, []);
 
+  // シール一覧ページへ遷移
   const viewStickers = useCallback(() => {
     window.location.href = '/stickers';
   }, []);
 
   return (
     <div className="App">
-      <h1 style={{ textAlign: 'center', fontSize: '2rem', whiteSpace: 'nowrap', padding: '10px' }}>今日のウエハースを開けよう！</h1>
+      <h1 style={{ textAlign: 'center', fontSize: '1.5rem', whiteSpace: 'nowrap', padding: '10px' }}>
+        今日のウエハースを開けよう！
+      </h1>
       <p style={{ textAlign: 'center' }}>（残りパック数: {remainingPacks}）</p>
 
       <img 
         src="/images/wafer.png" 
         alt="ウエハース" 
-        className="wafer" 
+        className={`wafer ${waferOpen ? 'open' : ''}`} // ウエハースが開いた状態を反映
         style={{ display: 'block', margin: '20px auto', maxWidth: '300px', cursor: 'pointer' }} 
         onClick={openWafer}
       />
