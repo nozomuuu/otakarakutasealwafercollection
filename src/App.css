@@ -11,26 +11,26 @@
 /* ウエハースのスタイル */
 .wafer {
   max-width: 200px;
-  transition: transform 2s ease-out;
+  transition: transform 1s ease-out; /* ラグを短縮 */
 }
 
 .wafer.open {
-  animation: moveUp 2s ease-out forwards;
+  animation: moveUp 1s ease-out forwards;
 }
 
 /* シールのスタイル */
 .sticker {
-  width: 300px !important;
+  width: 250px !important;
   height: auto !important;
   opacity: 1;
   position: absolute !important;
   left: 50%;
-  top: 40%; /* シールの位置を上に移動 */
+  top: 45%; /* シールの位置を調整 */
   transform: translate(-50%, -50%);
 }
 
 .sticker-container p {
-  margin-top: 10px;
+  margin-top: 5px; /* シールとレアリティの間隔を詰める */
   color: gold;
   font-size: 1.2rem;
 }

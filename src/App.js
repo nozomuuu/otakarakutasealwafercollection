@@ -22,16 +22,16 @@ function App() {
   const openWafer = useCallback(() => {
     if (remainingPacks > 0) {
       updateRemainingPacks();
-      setSticker(pickRandomSticker());
       setStickerVisible(false); // シール非表示
       const audio = new Audio('/sounds/wafer-open.mp3');
       audio.play();
 
       setTimeout(() => {
+        setSticker(pickRandomSticker()); // シールを表示
         setStickerVisible(true); // シール表示
         const stickerAudio = new Audio('/sounds/sticker-reveal.mp3');
         stickerAudio.play(); // シール表示時にSE再生
-      }, 2000); // 2秒後にシール表示
+      }, 1000); // アニメーションのラグを短縮
     } else {
       alert('今日はもうパックを開けられません！');
     }
@@ -44,10 +44,12 @@ function App() {
 
   return (
     <div className="App">
-      <h1 style={{ textAlign: 'center', fontSize: '1.5rem', whiteSpace: 'nowrap', padding: '5px' }}>
+      <h1 style={{ textAlign: 'center', fontSize: '1.5rem', whiteSpace: 'nowrap', padding: '5px', marginBottom: '0' }}>
         今日のウエハースを開けよう！
       </h1>
-      <p style={{ textAlign: 'center', fontSize: '1.1rem', fontFamily: 'Arial, sans-serif' }}>（残りパック数: {remainingPacks}）</p>
+      <p style={{ textAlign: 'center', fontSize: '1.1rem', fontFamily: 'Arial, sans-serif', marginTop: '0' }}>
+        （残りパック数: {remainingPacks}）
+      </p>
 
       <img 
         src="/images/wafer.png" 
@@ -58,14 +60,14 @@ function App() {
       />
 
       {isStickerVisible && sticker && (
-        <div className="sticker-container" style={{ textAlign: 'center', marginTop: '20px' }}>
+        <div className="sticker-container" style={{ textAlign: 'center', marginTop: '10px' }}>
           <img 
             src={sticker} 
             alt="Sticker" 
             className="sticker" 
             style={{ display: 'block', margin: '0 auto', maxWidth: '300px' }} 
           />
-          <p style={{ fontSize: '1.2rem', color: 'gold', marginTop: '10px' }}>{rarity}</p> {/* レアリティ★を表示 */}
+          <p style={{ fontSize: '1.2rem', color: 'gold', marginTop: '5px' }}>{rarity}</p> {/* レアリティ★を表示 */}
         </div>
       )}
 
