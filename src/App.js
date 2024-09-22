@@ -1,13 +1,10 @@
-import { useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import './App.css';
-import { useNavigate } from 'react-router-dom'; // React Routerを使った遷移
 
 function App() {
   const [remainingPacks, setRemainingPacks] = useState(2); // 1日に引けるパック数を2に設定
   const [isStickerVisible, setStickerVisible] = useState(false);
   const [sticker, setSticker] = useState(null);
-  const [isWaferOpen, setWaferOpen] = useState(false); // ウエハースが開かれたかどうかの状態
-  const navigate = useNavigate(); // React Routerでの遷移に使用
 
   // シールのランダム選択
   const pickRandomSticker = useCallback(() => {
@@ -26,19 +23,17 @@ function App() {
     if (remainingPacks > 0) {
       updateRemainingPacks();
       setSticker(pickRandomSticker());
-      setWaferOpen(true); // ウエハースを開ける
-      setStickerVisible(false); // 初期状態でシール非表示
+      setStickerVisible(true);
 
-      // ウエハースを開けるSE
-      const audioWafer = new Audio('/sounds/wafer-open.mp3');
-      audioWafer.play();
+      // ウエハースSEの再生
+      const waferAudio = new Audio('/sounds/wafer-open.mp3');
+      waferAudio.play();
 
-      // 1秒後にシールを表示し、SEを再生
+      // シールのSEを遅らせて再生
       setTimeout(() => {
-        setStickerVisible(true);
-        const audioSticker = new Audio('/sounds/sticker-reveal.mp3');
-        audioSticker.play(); // シールが表示された後にSEを再生
-      }, 1000); // シールの表示を1秒遅らせる
+        const stickerAudio = new Audio('/sounds/sticker-reveal.mp3');
+        stickerAudio.play();
+      }, 1000); // 1秒遅らせてシールSE再生
     } else {
       alert('今日はもうパックを開けられません！');
     }
@@ -46,37 +41,33 @@ function App() {
 
   // シール一覧を開く
   const viewStickers = useCallback(() => {
-    navigate('/stickers'); // React Routerを使って遷移
-  }, [navigate]);
+    window.location.href = '/stickers'; // シール一覧ページへの遷移
+  }, []);
 
   return (
     <div className="App">
       <h1 className="header">今日のウエハースを開けよう！</h1>
       <p className="remaining-packs">（残りパック数: {remainingPacks}）</p>
 
-      <img
-        src="/images/wafer.png"
-        alt="ウエハース"
-        className={`wafer ${isWaferOpen ? 'open' : ''}`} // ウエハースが開かれたときにアニメーションを実行
+      <img 
+        src="/images/wafer.png" 
+        alt="ウエハース" 
+        className={`wafer ${isStickerVisible ? 'open' : ''}`} 
       />
 
-      <button onClick={openWafer} className="open-wafer-button">
-        ウエハースを開ける
-      </button>
+      <button onClick={openWafer}>ウエハースを開ける</button>
 
       {isStickerVisible && sticker && (
         <div className="sticker-container">
           <img 
             src={sticker} 
             alt="Sticker" 
-            className="sticker show" 
+            className="sticker" 
           />
         </div>
       )}
 
-      <button onClick={viewStickers} className="back-button">
-        手に入れたシール一覧を見る
-      </button>
+      <button onClick={viewStickers}>手に入れたシール一覧を見る</button>
     </div>
   );
 }
