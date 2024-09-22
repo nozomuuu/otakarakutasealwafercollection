@@ -32,24 +32,30 @@ function App() {
     }
   }, [remainingPacks, updateRemainingPacks, pickRandomSticker]);
 
+  // シール表示時のSE再生（0.5秒遅延）
+  useEffect(() => {
+    if (isStickerVisible && sticker) {
+      setTimeout(() => {
+        const audio = new Audio('/sounds/sticker-reveal.mp3');
+        audio.play();
+      }, 500); // 0.5秒遅れて再生
+    }
+  }, [isStickerVisible, sticker]);
+
   // シール一覧を開く
   const viewStickers = useCallback(() => {
-    // シール一覧ページへの遷移などの処理を記述
     const audio = new Audio('/sounds/view-stickers.mp3');
     audio.play();
-    alert('シール一覧を見る画面に遷移します'); // 実際はページ遷移など
+    // シール一覧ページに遷移（仮のリンクに変更してください）
+    window.location.href = '/stickers';
   }, []);
-
-  useEffect(() => {
-    if (remainingPacks === 0) {
-      console.log('残りパック数が0になりました');
-    }
-  }, [remainingPacks]);
 
   return (
     <div className="App">
-      <h1 style={{ textAlign: 'center', fontSize: '2rem', whiteSpace: 'nowrap' }}>今日のウエハースを開けよう！</h1>
-      <p style={{ textAlign: 'center' }}>（残りパック数: {remainingPacks}）</p>
+      <h1 style={{ textAlign: 'center', fontSize: '1.6rem', margin: '20px', padding: '0 10px' }}>
+        今日のウエハースを開けよう！
+      </h1>
+      <p style={{ textAlign: 'center', margin: '10px', padding: '0 10px' }}>（残りパック数: {remainingPacks}）</p>
 
       <img 
         src="/images/wafer.png" 
@@ -70,7 +76,6 @@ function App() {
             className="sticker" 
             style={{ display: 'block', margin: '0 auto', maxWidth: '300px' }} 
           />
-          <audio src="/sounds/sticker-reveal.mp3" autoPlay />
         </div>
       )}
 
