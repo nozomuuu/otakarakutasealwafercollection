@@ -5,6 +5,7 @@ function App() {
   const [remainingPacks, setRemainingPacks] = useState(2); // 1日に引けるパック数を2に設定
   const [isStickerVisible, setStickerVisible] = useState(false);
   const [sticker, setSticker] = useState(null);
+  const [isWaferOpen, setWaferOpen] = useState(false); // ウエハースが開かれたかどうかの状態
 
   // シールのランダム選択
   const pickRandomSticker = useCallback(() => {
@@ -23,17 +24,19 @@ function App() {
     if (remainingPacks > 0) {
       updateRemainingPacks();
       setSticker(pickRandomSticker());
-      setStickerVisible(true);
+      setWaferOpen(true); // ウエハースを開ける
+      setStickerVisible(false); // 初期状態でシール非表示
 
       // ウエハースを開けるSE
       const audioWafer = new Audio('/sounds/wafer-open.mp3');
       audioWafer.play();
 
-      // シール登場SEを遅らせて再生
+      // 1秒後にシールを表示し、SEを再生
       setTimeout(() => {
+        setStickerVisible(true);
         const audioSticker = new Audio('/sounds/sticker-reveal.mp3');
         audioSticker.play();
-      }, 1000); // 1秒遅らせてシール登場SEを再生
+      }, 1000); // シールの表示を1秒遅らせる
     } else {
       alert('今日はもうパックを開けられません！');
     }
@@ -41,7 +44,8 @@ function App() {
 
   // シール一覧を開く
   const viewStickers = useCallback(() => {
-    window.location.href = '/stickers'; // シール一覧ページに遷移
+    // シール一覧ページに遷移（window.location.hrefではなくページ遷移をシンプルに処理）
+    window.location.href = '/stickers'; // 実際のURLに変更してください
   }, []);
 
   return (
@@ -49,10 +53,10 @@ function App() {
       <h1 className="header">今日のウエハースを開けよう！</h1>
       <p className="remaining-packs">（残りパック数: {remainingPacks}）</p>
 
-      <img 
-        src="/images/wafer.png" 
-        alt="ウエハース" 
-        className="wafer" 
+      <img
+        src="/images/wafer.png"
+        alt="ウエハース"
+        className={`wafer ${isWaferOpen ? 'open' : ''}`} // ウエハースが開かれたときにアニメーションを実行
       />
 
       <button onClick={openWafer} className="open-wafer-button">
@@ -64,7 +68,7 @@ function App() {
           <img 
             src={sticker} 
             alt="Sticker" 
-            className="sticker" 
+            className="sticker show" 
           />
         </div>
       )}

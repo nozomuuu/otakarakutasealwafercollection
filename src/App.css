@@ -78,11 +78,6 @@
   margin-top: 5px;
 }
 
-/* SEの修正 */
-audio {
-  display: none;
-}
-
 /* レスポンシブ調整 */
 @media only screen and (max-width: 600px) {
   .wafer {
