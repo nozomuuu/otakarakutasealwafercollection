@@ -1,77 +1,57 @@
-/* ウエハースが完全に画面外に消えるアニメーション */
-@keyframes moveUp {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-600px); /* ウエハースがさらに上に移動 */
-  }
-}
-
-/* シールが下からフェードインしながら表示されるアニメーション */
-@keyframes stickerFadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(200px); /* シールが下から登場 */
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* ウエハースのスタイル */
 .wafer {
-  max-width: 400px; /* ウエハース画像のサイズ調整 */
+  max-width: 400px;
   max-height: 400px;
-  margin: 0 auto 20px auto; /* 中央揃え */
+  margin: 0 auto 20px auto;
   display: block;
-  transition: transform 1.5s ease-out; /* ウエハース移動速度を少し遅く */
+  transition: transform 1.5s ease-out; /* ウエハースの移動速度を調整 */
 }
 
-/* ウエハースが開かれたとき */
 .wafer.open {
-  animation: moveUp 1.5s ease-out forwards;
+  animation: moveUp 1.5s ease-out forwards; /* ウエハースをゆっくり上に移動 */
 }
 
 /* シールのスタイル */
 .sticker {
-  width: 300px; /* シール画像のサイズ */
-  height: auto;
+  width: 300px !important;
+  height: auto !important;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
-  position: absolute;
+  position: absolute !important;
   left: 50%;
-  top: 50%; /* 画面中央に配置 */
-  transform: translate(-50%, -50%); /* x軸とy軸両方を中央に設定 */
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
-/* シールがフェードインして表示される */
 .sticker.show {
   animation: stickerFadeIn 1s ease-in-out forwards;
 }
 
-/* 手に入れたシール一覧ボタン */
-button {
-  margin-top: 20px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto; /* ボタンを中央揃え */
+/* シール登場アニメーション */
+@keyframes stickerFadeIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 50%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
 }
 
-/* 今日のウエハースを開けよう！と残りパック数を中央揃え */
-.header {
-  text-align: center;
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
+/* SEの修正 */
+audio {
+  display: none;
 }
 
-.remaining-packs {
-  text-align: center;
-  font-size: 1rem;
-  margin-top: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
+/* レスポンシブ調整 */
+@media only screen and (max-width: 600px) {
+  .wafer {
+    max-width: 250px;
+    max-height: 250px;
+  }
+
+  .sticker {
+    width: 200px !important;
+  }
 }

@@ -4,7 +4,8 @@ function StickersPage() {
   return (
     <div>
       <h1>手に入れたシール一覧</h1>
-      {/* シール一覧をここに表示する */}
+      <p>ここにシール一覧が表示されます。</p>
+      <Link to="/">ホームに戻る</Link>
     </div>
   );
 }
