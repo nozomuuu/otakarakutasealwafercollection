@@ -1,80 +1,56 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 
 function App() {
-  // 初期パック数を2に設定
-  const [packCount, setPackCount] = useState(2);
-  const [stickerVisible, setStickerVisible] = useState(false);
-  
-  // パック数を更新する関数
-  function updateRemainingPacks() {
-    const packElement = document.getElementById('pack-count');
-    if (packElement) {
-      packElement.innerText = `${packCount}`;
+  const [remainingPacks, setRemainingPacks] = useState(2); // 1日に引けるパック数を2に設定
+  const [isStickerVisible, setStickerVisible] = useState(false);
+  const [sticker, setSticker] = useState(null);
+
+  // シールのランダム選択
+  const pickRandomSticker = useCallback(() => {
+    const totalStickers = 50; // シールの総数
+    const randomNumber = Math.floor(Math.random() * totalStickers) + 1;
+    return `/images/${randomNumber}.jpg`; // シール画像のパス
+  }, []);
+
+  // 残りパック数の更新
+  const updateRemainingPacks = useCallback(() => {
+    setRemainingPacks((prevPacks) => prevPacks - 1);
+  }, []);
+
+  // ウエハースを開ける
+  const openWafer = useCallback(() => {
+    if (remainingPacks > 0) {
+      updateRemainingPacks();
+      setSticker(pickRandomSticker());
+      setStickerVisible(true);
+    } else {
+      alert('今日はもうパックを開けられません！');
     }
-  }
+  }, [remainingPacks, updateRemainingPacks, pickRandomSticker]);
 
   useEffect(() => {
-    // ウエハースを開けるボタン
-    const waferButton = document.getElementById('open-wafer');
-    
-    if (waferButton) {
-      waferButton.addEventListener('click', () => {
-        if (packCount > 0) {
-          // パック数を1つ減らす
-          setPackCount(packCount - 1);
-          updateRemainingPacks();
-
-          // ウエハースを開ける音を再生
-          const waferSound = new Audio('/sounds/wafer-open.mp3');
-          waferSound.play();
-
-          // シールが登場するまでの遅延をシミュレート
-          setTimeout(() => {
-            // シールが出てくる際の音
-            const stickerSound = new Audio('/sounds/sticker-reveal.mp3');
-            stickerSound.play();
-
-            // シールを表示
-            setStickerVisible(true);
-          }, 1000);
-        } else {
-          alert('今日はもうパックを開けられません！');
-        }
-      });
+    if (remainingPacks === 0) {
+      console.log('残りパック数が0になりました');
     }
-
-    // 手に入れたシール一覧を見るボタンのリンク修正
-    const backButton = document.querySelector('.back-button');
-    
-    if (backButton) {
-      backButton.addEventListener('click', () => {
-        // シール一覧を見る音を再生
-        const viewStickersSound = new Audio('/sounds/view-stickers.mp3');
-        viewStickersSound.play();
-
-        window.location.href = '/stickers';
-      });
-    }
-  }, [packCount, updateRemainingPacks]); // updateRemainingPacks を依存関係に追加
+  }, [remainingPacks]);
 
   return (
     <div className="App">
-      <div className="header">
-        今日のウエハースを開けよう！
-      </div>
-      <div className="remaining-packs" style={{ textAlign: 'center' }}>
-        残りパック数: <span id="pack-count">{packCount}</span>
-      </div>
-      <button id="open-wafer">ウエハースを開ける</button>
-      <button className="back-button">手に入れたシール一覧を見る</button>
-      
-      {/* シール表示部分 */}
-      {stickerVisible && (
-        <div className="sticker">
-          <img src="/images/sticker1.jpg" alt="Sticker" style={{ width: '200px', height: 'auto' }} />
+      <h1 style={{ textAlign: 'center' }}>今日のウエハースを開けよう！</h1>
+      <p style={{ textAlign: 'center' }}>（残りパック数: {remainingPacks}）</p>
+
+      <button onClick={openWafer} style={{ display: 'block', margin: '20px auto' }}>
+        ウエハースを開ける
+      </button>
+
+      {isStickerVisible && sticker && (
+        <div className="sticker-container">
+          <img src={sticker} alt="Sticker" className="sticker" style={{ display: 'block', margin: '0 auto', maxWidth: '300px' }} />
         </div>
       )}
+
+      <button style={{ display: 'block', margin: '20px auto' }}>手に入れたシール一覧を見る</button>
     </div>
   );
 }
