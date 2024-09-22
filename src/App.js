@@ -56,7 +56,7 @@ function App() {
         window.location.href = '/stickers';
       });
     }
-  }, [packCount]);
+  }, [packCount, updateRemainingPacks]); // updateRemainingPacks を依存関係に追加
 
   return (
     <div className="App">
