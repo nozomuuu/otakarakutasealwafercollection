@@ -23,29 +23,11 @@
 .sticker {
   width: 300px !important;
   height: auto !important;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
+  opacity: 1;
   position: absolute !important;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%); /* 中央揃え */
-}
-
-/* シールがフェードインして表示される */
-.sticker.show {
-  animation: fadeIn 1s ease-in-out forwards;
-}
-
-.sticker-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-/* SEの非表示 */
-audio {
-  display: none;
+  transform: translate(-50%, -50%); /* シールを中央に配置 */
 }
 
 /* スマホ向けにサイズを調整 */
