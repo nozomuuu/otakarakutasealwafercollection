@@ -1,17 +1,15 @@
-/* ウエハースのスタイル */
 .wafer {
   max-width: 400px;
   max-height: 400px;
   margin: 0 auto 20px auto;
   display: block;
-  transition: transform 1.5s ease-out; /* ウエハースの移動速度を調整 */
+  transition: transform 1.5s ease-out;
 }
 
 .wafer.open {
-  animation: moveUp 1.5s ease-out forwards; /* ウエハースをゆっくり上に移動 */
+  animation: moveUp 1.5s ease-out forwards;
 }
 
-/* シールのスタイル */
 .sticker {
   width: 300px !important;
   height: auto !important;
@@ -27,7 +25,6 @@
   animation: stickerFadeIn 1s ease-in-out forwards;
 }
 
-/* シール登場アニメーション */
 @keyframes stickerFadeIn {
   0% {
     opacity: 0;
@@ -36,22 +33,5 @@
   100% {
     opacity: 1;
     transform: translate(-50%, -50%);
-  }
-}
-
-/* SEの修正 */
-audio {
-  display: none;
-}
-
-/* レスポンシブ調整 */
-@media only screen and (max-width: 600px) {
-  .wafer {
-    max-width: 250px;
-    max-height: 250px;
-  }
-
-  .sticker {
-    width: 200px !important;
   }
 }

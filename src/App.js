@@ -1,32 +1,28 @@
 import React, { useState, useCallback } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import StickersPage from './StickersPage'; // シール一覧ページ用のコンポーネント
+import StickersPage from './StickersPage';
 
 function App() {
-  const [remainingPacks, setRemainingPacks] = useState(2); // 1日に引けるパック数を2に設定
+  const [remainingPacks, setRemainingPacks] = useState(2);
   const [isStickerVisible, setStickerVisible] = useState(false);
   const [sticker, setSticker] = useState(null);
 
-  // シールのランダム選択
   const pickRandomSticker = useCallback(() => {
-    const totalStickers = 50; // シールの総数
+    const totalStickers = 50;
     const randomNumber = Math.floor(Math.random() * totalStickers) + 1;
-    return `/images/${randomNumber}.jpg`; // シール画像のパス
+    return `/images/${randomNumber}.jpg`;
   }, []);
 
-  // 残りパック数の更新
   const updateRemainingPacks = useCallback(() => {
     setRemainingPacks((prevPacks) => prevPacks - 1);
   }, []);
 
-  // ウエハースを開ける
   const openWafer = useCallback(() => {
     if (remainingPacks > 0) {
       updateRemainingPacks();
       setSticker(pickRandomSticker());
       setStickerVisible(true);
-      // ウエハースを開けるSE
       const audio = new Audio('/sounds/wafer-open.mp3');
       audio.play();
     } else {
@@ -34,15 +30,12 @@ function App() {
     }
   }, [remainingPacks, updateRemainingPacks, pickRandomSticker]);
 
-  // シール登場時のSE再生
   const playStickerRevealSE = useCallback(() => {
     const stickerAudio = new Audio('/sounds/sticker-reveal.mp3');
     stickerAudio.play();
   }, []);
 
-  // シール一覧を開く
   const viewStickers = useCallback(() => {
-    // シール一覧ページに遷移
     window.location.href = '/stickers';
   }, []);
 
@@ -71,7 +64,7 @@ function App() {
               alt="Sticker" 
               className="sticker" 
               style={{ display: 'block', margin: '0 auto', maxWidth: '300px' }} 
-              onLoad={playStickerRevealSE} // シールが表示された後にSEを再生
+              onLoad={playStickerRevealSE}
             />
           </div>
         )}
