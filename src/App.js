@@ -1,54 +1,40 @@
-import React, { useState } from "react";
-import "./App.css";
-import waferImage from "./images/wafer.png";
-import sticker1 from "./images/sticker1.png";
-import sticker2 from "./images/sticker2.png";
-import sticker3 from "./images/sticker3.png";
+import React, { useState } from 'react';
+import './App.css';
 
-const App = () => {
-  const [isOpened, setIsOpened] = useState(false);
-  const [currentSticker, setCurrentSticker] = useState(null);
-  const [remainingPacks, setRemainingPacks] = useState(5);
-  const stickers = [sticker1, sticker2, sticker3]; // ここにシールの画像を追加
+// 画像を一括インポートする関数
+const importAll = (requireContext) => {
+  return requireContext.keys().map(requireContext);
+};
 
-  const openWafer = () => {
-    if (remainingPacks > 0) {
-      setIsOpened(true);
-      const randomSticker = stickers[Math.floor(Math.random() * stickers.length)];
-      setCurrentSticker(randomSticker);
-      setRemainingPacks(remainingPacks - 1);
-    }
+// src/images フォルダから .jpg ファイルをすべて読み込む
+const stickerImages = importAll(require.context('./images', false, /\.(png|jpe?g)$/));
+
+function App() {
+  const [sticker, setSticker] = useState(null);
+
+  // ランダムにステッカーの画像を選択する関数
+  const getRandomSticker = () => {
+    const randomIndex = Math.floor(Math.random() * stickerImages.length);
+    return stickerImages[randomIndex];
   };
 
-  const reset = () => {
-    setIsOpened(false);
-    setCurrentSticker(null);
+  // ウエハースを開けるボタンが押されたときにシールを表示
+  const handleOpenWafer = () => {
+    setSticker(getRandomSticker());
   };
 
   return (
-    <div className="app">
-      <div className="header">
-        今日のウエハースを開けよう！
-      </div>
-      <div className="remaining-packs">
-        残りパック数: {remainingPacks}
-      </div>
+    <div className="App">
+      <h1>今日のウエハースを開けよう！</h1>
+      <p className="remaining-packs">（残りパック数: 5）</p>
       <div className="wafer-container">
-        {!isOpened && (
-          <>
-            <img src={waferImage} alt="ウエハース" className="wafer" />
-            <button onClick={openWafer}>ウエハースを開ける</button>
-          </>
-        )}
-        {isOpened && currentSticker && (
-          <div className="sticker-container">
-            <img src={currentSticker} alt="シール" className="sticker show" />
-            <button onClick={reset}>手に入れたシールを見る</button>
-          </div>
-        )}
+        <img src="./images/wafer.png" alt="wafer" className="wafer" />
+        <button onClick={handleOpenWafer} className="open-wafer-button">ウエハースを開ける</button>
       </div>
+      {sticker && <img src={sticker} alt="Sticker" className="sticker" />}
+      <button className="back-button">手に入れたシール一覧を見る</button>
     </div>
   );
-};
+}
 
 export default App;
