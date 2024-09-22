@@ -1,7 +1,7 @@
 /* ウエハースのスタイル */
 .wafer {
-  max-width: 400px;
-  max-height: 400px;
+  max-width: 350px; /* ウエハースのサイズを調整 */
+  max-height: 350px;
   margin: 20px auto;
   display: block;
   transition: transform 1s ease-out;
@@ -23,7 +23,7 @@
 
 /* シールのスタイル */
 .sticker {
-  width: 400px;
+  width: 280px; /* シールのサイズを修正して、画面に収まるように調整 */
   height: auto;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
@@ -86,7 +86,7 @@
   }
 
   .sticker {
-    width: 300px;
+    width: 220px; /* スマホでもシールが大きすぎないように修正 */
   }
 
   .header {

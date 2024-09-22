@@ -35,7 +35,7 @@ function App() {
       setTimeout(() => {
         setStickerVisible(true);
         const audioSticker = new Audio('/sounds/sticker-reveal.mp3');
-        audioSticker.play();
+        audioSticker.play(); // シールが表示された後にSEを再生
       }, 1000); // シールの表示を1秒遅らせる
     } else {
       alert('今日はもうパックを開けられません！');
@@ -44,7 +44,7 @@ function App() {
 
   // シール一覧を開く
   const viewStickers = useCallback(() => {
-    // シール一覧ページに遷移（window.location.hrefではなくページ遷移をシンプルに処理）
+    // シール一覧ページへの遷移（React Router の Link などに置き換える）
     window.location.href = '/stickers'; // 実際のURLに変更してください
   }, []);
 
