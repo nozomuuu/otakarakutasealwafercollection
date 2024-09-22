@@ -24,10 +24,21 @@ function App() {
       updateRemainingPacks();
       setSticker(pickRandomSticker());
       setStickerVisible(true);
+      // SEの再生
+      const audio = new Audio('/sounds/wafer-open.mp3');
+      audio.play();
     } else {
       alert('今日はもうパックを開けられません！');
     }
   }, [remainingPacks, updateRemainingPacks, pickRandomSticker]);
+
+  // シール一覧を開く
+  const viewStickers = useCallback(() => {
+    // シール一覧ページへの遷移などの処理を記述
+    const audio = new Audio('/sounds/view-stickers.mp3');
+    audio.play();
+    alert('シール一覧を見る画面に遷移します'); // 実際はページ遷移など
+  }, []);
 
   useEffect(() => {
     if (remainingPacks === 0) {
@@ -37,8 +48,15 @@ function App() {
 
   return (
     <div className="App">
-      <h1 style={{ textAlign: 'center' }}>今日のウエハースを開けよう！</h1>
+      <h1 style={{ textAlign: 'center', fontSize: '2rem', whiteSpace: 'nowrap' }}>今日のウエハースを開けよう！</h1>
       <p style={{ textAlign: 'center' }}>（残りパック数: {remainingPacks}）</p>
+
+      <img 
+        src="/images/wafer.png" 
+        alt="ウエハース" 
+        className="wafer" 
+        style={{ display: 'block', margin: '20px auto', maxWidth: '300px' }} 
+      />
 
       <button onClick={openWafer} style={{ display: 'block', margin: '20px auto' }}>
         ウエハースを開ける
@@ -46,11 +64,19 @@ function App() {
 
       {isStickerVisible && sticker && (
         <div className="sticker-container">
-          <img src={sticker} alt="Sticker" className="sticker" style={{ display: 'block', margin: '0 auto', maxWidth: '300px' }} />
+          <img 
+            src={sticker} 
+            alt="Sticker" 
+            className="sticker" 
+            style={{ display: 'block', margin: '0 auto', maxWidth: '300px' }} 
+          />
+          <audio src="/sounds/sticker-reveal.mp3" autoPlay />
         </div>
       )}
 
-      <button style={{ display: 'block', margin: '20px auto' }}>手に入れたシール一覧を見る</button>
+      <button onClick={viewStickers} style={{ display: 'block', margin: '20px auto' }}>
+        手に入れたシール一覧を見る
+      </button>
     </div>
   );
 }
