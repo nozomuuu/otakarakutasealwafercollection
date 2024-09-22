@@ -25,7 +25,7 @@
   opacity: 1;
   position: absolute !important;
   left: 50%;
-  top: 45%; /* 少し上に移動 */
+  top: 40%; /* シールの位置を上に移動 */
   transform: translate(-50%, -50%);
 }
 
