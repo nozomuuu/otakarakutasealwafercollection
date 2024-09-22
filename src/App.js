@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import StickersPage from './StickersPage';
+// import { Link } from 'react-router-dom'; // 未使用のインポートを削除
 
 function App() {
   const [remainingPacks, setRemainingPacks] = useState(2);
@@ -40,44 +39,38 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <div className="App">
-        <h1 style={{ textAlign: 'center', fontSize: '2rem', whiteSpace: 'nowrap', padding: '10px' }}>今日のウエハースを開けよう！</h1>
-        <p style={{ textAlign: 'center' }}>（残りパック数: {remainingPacks}）</p>
+    <div className="App">
+      <h1 style={{ textAlign: 'center', fontSize: '2rem', whiteSpace: 'nowrap', padding: '10px' }}>今日のウエハースを開けよう！</h1>
+      <p style={{ textAlign: 'center' }}>（残りパック数: {remainingPacks}）</p>
 
-        <img 
-          src="/images/wafer.png" 
-          alt="ウエハース" 
-          className="wafer" 
-          style={{ display: 'block', margin: '20px auto', maxWidth: '300px', cursor: 'pointer' }} 
-          onClick={openWafer}
-        />
+      <img 
+        src="/images/wafer.png" 
+        alt="ウエハース" 
+        className="wafer" 
+        style={{ display: 'block', margin: '20px auto', maxWidth: '300px', cursor: 'pointer' }} 
+        onClick={openWafer}
+      />
 
-        <button onClick={openWafer} style={{ display: 'block', margin: '20px auto' }}>
-          ウエハースを開ける
-        </button>
+      <button onClick={openWafer} style={{ display: 'block', margin: '20px auto' }}>
+        ウエハースを開ける
+      </button>
 
-        {isStickerVisible && sticker && (
-          <div className="sticker-container">
-            <img 
-              src={sticker} 
-              alt="Sticker" 
-              className="sticker" 
-              style={{ display: 'block', margin: '0 auto', maxWidth: '300px' }} 
-              onLoad={playStickerRevealSE}
-            />
-          </div>
-        )}
+      {isStickerVisible && sticker && (
+        <div className="sticker-container">
+          <img 
+            src={sticker} 
+            alt="Sticker" 
+            className="sticker" 
+            style={{ display: 'block', margin: '0 auto', maxWidth: '300px' }} 
+            onLoad={playStickerRevealSE}
+          />
+        </div>
+      )}
 
-        <button onClick={viewStickers} style={{ display: 'block', margin: '20px auto' }}>
-          手に入れたシール一覧を見る
-        </button>
-
-        <Routes>
-          <Route path="/stickers" element={<StickersPage />} />
-        </Routes>
-      </div>
-    </Router>
+      <button onClick={viewStickers} style={{ display: 'block', margin: '20px auto' }}>
+        手に入れたシール一覧を見る
+      </button>
+    </div>
   );
 }
 
