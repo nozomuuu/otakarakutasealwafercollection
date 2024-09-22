@@ -7,6 +7,12 @@
   transition: transform 1s ease-out;
 }
 
+/* ウエハースが開かれたときのアニメーション */
+.wafer.open {
+  transform: translateY(-800px); /* ウエハースが上に移動して消える */
+  transition: transform 1s ease-out;
+}
+
 /* シールのスタイル */
 .sticker {
   width: 400px !important; /* シール画像のサイズをもう二回り大きく調整 */

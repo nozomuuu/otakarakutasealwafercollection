@@ -5,6 +5,7 @@ function App() {
   const [remainingPacks, setRemainingPacks] = useState(2); // 1日に引けるパック数を2に設定
   const [isStickerVisible, setStickerVisible] = useState(false);
   const [sticker, setSticker] = useState(null);
+  const [isWaferOpen, setWaferOpen] = useState(false); // ウエハース開封状態
 
   // シールのランダム選択
   const pickRandomSticker = useCallback(() => {
@@ -23,8 +24,16 @@ function App() {
     if (remainingPacks > 0) {
       updateRemainingPacks();
       setSticker(pickRandomSticker());
-      setStickerVisible(true);
-      // SEの再生
+      setWaferOpen(true); // ウエハースを開けるアニメーション開始
+      setTimeout(() => {
+        setStickerVisible(true); // シール表示
+        // シール表示時のSE再生（1秒遅延）
+        setTimeout(() => {
+          const audio = new Audio('/sounds/sticker-reveal.mp3');
+          audio.play();
+        }, 1000); // 1秒遅れて再生
+      }, 1500); // ウエハースアニメーション後にシールを表示
+      // ウエハース開封SE
       const audio = new Audio('/sounds/wafer-open.mp3');
       audio.play();
     } else {
@@ -32,22 +41,9 @@ function App() {
     }
   }, [remainingPacks, updateRemainingPacks, pickRandomSticker]);
 
-  // シール表示時のSE再生（0.5秒遅延）
-  useEffect(() => {
-    if (isStickerVisible && sticker) {
-      setTimeout(() => {
-        const audio = new Audio('/sounds/sticker-reveal.mp3');
-        audio.play();
-      }, 500); // 0.5秒遅れて再生
-    }
-  }, [isStickerVisible, sticker]);
-
   // シール一覧を開く
   const viewStickers = useCallback(() => {
-    const audio = new Audio('/sounds/view-stickers.mp3');
-    audio.play();
-    // シール一覧ページに遷移（仮のリンクに変更してください）
-    window.location.href = '/stickers';
+    window.location.href = '/stickers'; // 同じタブでシール一覧ページに移動
   }, []);
 
   return (
@@ -60,7 +56,7 @@ function App() {
       <img 
         src="/images/wafer.png" 
         alt="ウエハース" 
-        className="wafer" 
+        className={`wafer ${isWaferOpen ? 'open' : ''}`} 
         style={{ display: 'block', margin: '20px auto', maxWidth: '300px' }} 
       />
 
