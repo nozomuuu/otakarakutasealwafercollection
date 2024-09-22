@@ -24,26 +24,24 @@ function App() {
     if (remainingPacks > 0) {
       updateRemainingPacks();
       setSticker(pickRandomSticker());
-      setStickerVisible(true);
+      setStickerVisible(false); // 一旦シールを非表示に
       setWaferOpen(true); // ウエハースが開いた状態にする
       const audio = new Audio('/sounds/wafer-open.mp3');
       audio.play();
+
+      setTimeout(() => {
+        setStickerVisible(true); // シールを1秒後に表示
+        const stickerAudio = new Audio('/sounds/sticker-reveal.mp3');
+        stickerAudio.play(); // シール登場後にSEを再生
+      }, 1000);
     } else {
       alert('今日はもうパックを開けられません！');
     }
   }, [remainingPacks, updateRemainingPacks, pickRandomSticker]);
 
-  // シール登場時のSE
-  const playStickerRevealSE = useCallback(() => {
-    setTimeout(() => {
-      const stickerAudio = new Audio('/sounds/sticker-reveal.mp3');
-      stickerAudio.play();
-    }, 1000); // シールが表示されてから1秒後にSEを再生
-  }, []);
-
   // シール一覧ページへ遷移
   const viewStickers = useCallback(() => {
-    window.location.href = '/stickers';
+    window.location.href = '/stickers'; // シール一覧ページに遷移
   }, []);
 
   return (
@@ -57,7 +55,7 @@ function App() {
         src="/images/wafer.png" 
         alt="ウエハース" 
         className={`wafer ${waferOpen ? 'open' : ''}`} // ウエハースが開いた状態を反映
-        style={{ display: 'block', margin: '20px auto', maxWidth: '300px', cursor: 'pointer' }} 
+        style={{ display: 'block', margin: '20px auto', maxWidth: '200px', cursor: 'pointer' }} // サイズを小さく調整
         onClick={openWafer}
       />
 
@@ -72,7 +70,6 @@ function App() {
             alt="Sticker" 
             className="sticker" 
             style={{ display: 'block', margin: '0 auto', maxWidth: '300px' }} 
-            onLoad={playStickerRevealSE}
           />
         </div>
       )}

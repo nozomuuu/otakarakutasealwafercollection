@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css'; // 必要であれば追加
 
 function StickersPage() {
   return (

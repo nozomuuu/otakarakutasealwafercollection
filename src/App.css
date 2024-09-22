@@ -10,7 +10,7 @@
 
 /* ウエハースのスタイル */
 .wafer {
-  max-width: 300px;
+  max-width: 200px; /* ウエハースのサイズを小さく調整 */
   transition: transform 1s ease-out;
 }
 
@@ -27,8 +27,7 @@
   transition: opacity 0.5s ease-in-out;
   position: absolute !important;
   left: 50%;
-  transform: translate(-50%, 0); /* 中央揃え */
-  top: 50%; /* Y軸中央 */
+  top: 50%;
   transform: translate(-50%, -50%); /* 中央揃え */
 }
 
@@ -52,7 +51,7 @@ audio {
 /* スマホ向けにサイズを調整 */
 @media only screen and (max-width: 600px) {
   .wafer {
-    max-width: 200px; /* ウエハースのサイズを縮小 */
+    max-width: 150px; /* ウエハースのサイズをさらに縮小 */
   }
 
   .sticker {
