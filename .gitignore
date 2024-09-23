@@ -14,3 +14,5 @@ export default StickersPage;
 
 .DS_Store
  5607d1c7 (Ignore .DS_Store files)
+.bash_sessions/
+Desktop/*.png
