@@ -16,3 +16,12 @@ export default StickersPage;
  5607d1c7 (Ignore .DS_Store files)
 .bash_sessions/
 Desktop/*.png
+
+.bash_history
+.bash_profile
+.gitconfig
+.npm/
+Desktop/
+Downloads/
+Library/
+
