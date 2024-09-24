@@ -1,4 +1,4 @@
 [submodule "otakarakutasealwafercollection"]
   path = otakarakutasealwafercollection
-  url = https://github.com/nozomuuu/otakarakutasealwafercollection.git
+	url = git@github.com:nozomuuu/otakarakutasealwafercollection.git
 
