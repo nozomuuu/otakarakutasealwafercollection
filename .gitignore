@@ -14,6 +14,7 @@ export default StickersPage;
 
 .DS_Store
  5607d1c7 (Ignore .DS_Store files)
+<<<<<<< HEAD
 .bash_sessions/
 Desktop/*.png
 
@@ -26,3 +27,24 @@ Downloads/
 Library/
 
 .lesshst
+=======
+ファイル名またはディレクトリ名
+.DS_Store
+Library/
+.Trash/
+.bash_history
+.vscode/
+Dropbox/
+.npm/
+<file_or_directory_to_ignore>
+<file_or_directory_to_ignore>
+Desktop/card-pack-app/largefile.dat
+Desktop/20230724.mov
+Desktop/karasuningen.pdf.zip
+Desktop/nyukodate2.zip
+Desktop/アニメーション20230118.mov
+Desktop/チョン・ジャンヒョン/19_end/hero.mov
+path/to/largefile
+.bash_sessions/
+Desktop/*.png
+>>>>>>> 57894ccf (Removed submodule and fixed repository structure)

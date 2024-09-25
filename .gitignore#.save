@@ -1,0 +1,10 @@
+Library/
+.DS_Store
+.Trash/
+git add .
+git commit -m "シール位置、SEタイミング、シール一覧ページ修正"
+git push origin main
+Library/
+.DS_Store
+.Trash/
+
